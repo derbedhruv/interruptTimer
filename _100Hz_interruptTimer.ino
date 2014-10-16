@@ -1,4 +1,5 @@
-//http://www.instructables.com/id/Arduino-Timer-Interrupts/
+// http://www.instructables.com/id/Arduino-Timer-Interrupts/
+// will be doing DSP realtime to remove that ugly bloody 50Hz feature and also do some smoothing andshit.
 
 void setup(){
   Serial.begin(115200);    // superfast  
