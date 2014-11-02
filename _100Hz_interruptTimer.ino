@@ -1,6 +1,8 @@
 // http://www.instructables.com/id/Arduino-Timer-Interrupts/
 // will be doing DSP realtime to remove that ugly bloody 50Hz feature and also do some smoothing andshit.
 
+int currentValue, filteredValue, last_filteredValue, last_value;
+
 void setup(){
   Serial.begin(115200);    // superfast  
   
@@ -25,7 +27,16 @@ void setup(){
 
 ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
    // will simply read A0 and throw the value into serial
-   Serial.println(analogRead(14));
+   Serial.println(analogRead(A0));
+   
+   /*
+   last_value = currentValue;
+   
+   currentValue = (float) analogRead(A0);  // read a piece of data
+   filteredValue = currentValue - last_value;  // filter it using a digital filter, this is the simplest lowpass filter
+   
+   Serial.println(filteredValue);  // print it to serial
+   /**/
 }
 
 void loop(){
