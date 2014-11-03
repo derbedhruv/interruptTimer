@@ -24,8 +24,9 @@ void setup(){
   sei();//allow interrupts
 
   // next this is something I'm going to try: how PWM LED control shows up on the photodiode...
-  pinMode(9, OUTPUT);
-  analogWrite(9, 125);
+  // using pin 11 since it is controlled by Timer2 (we;re using Timer1 for the interrupt)
+  pinMode(11, OUTPUT);
+  analogWrite(11, 55);
 }
 
 ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
