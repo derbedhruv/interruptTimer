@@ -25,8 +25,13 @@ void setup(){
 
   // next this is something I'm going to try: how PWM LED control shows up on the photodiode...
   // using pin 11 since it is controlled by Timer2 (we;re using Timer1 for the interrupt)
+  // first we'll change the frequency of the PWM to suit our needs...
+  // ref: http://playground.arduino.cc/Main/TimerPWMCheatsheet
+  TCCR2B = TCCR2B & 0b11111000 | 0x02;  // 3921.16 Hz
+
+  // then we set it on!
   pinMode(11, OUTPUT);
-  float voltage = 3.0;  // voltage you wanna outputio
+  float voltage = 4.5;  // voltage you wanna outputio
   analogWrite(11, int((voltage/5.0)*256) - 1);
 }
 
