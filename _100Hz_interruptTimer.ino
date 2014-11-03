@@ -31,22 +31,14 @@ void setup(){
 
   // then we set it on!
   pinMode(11, OUTPUT);
-  float voltage = 4.5;  // voltage you wanna outputio
+  float voltage = 4.8;  // voltage you wanna outputio
   analogWrite(11, int((voltage/5.0)*256) - 1);
 }
 
 ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
    // will simply read A0 and throw the value into serial
    Serial.println(analogRead(A0));
-   
-   /*
-   last_value = currentValue;
-   
-   currentValue = (float) analogRead(A0);  // read a piece of data
-   filteredValue = currentValue - last_value;  // filter it using a digital filter, this is the simplest lowpass filter
-   
-   Serial.println(filteredValue);  // print it to serial
-   /**/
+
 }
 
 void loop(){
