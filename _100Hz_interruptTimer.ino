@@ -26,7 +26,8 @@ void setup(){
   // next this is something I'm going to try: how PWM LED control shows up on the photodiode...
   // using pin 11 since it is controlled by Timer2 (we;re using Timer1 for the interrupt)
   pinMode(11, OUTPUT);
-  analogWrite(11, 55);
+  float voltage = 3.0;  // voltage you wanna outputio
+  analogWrite(11, int((voltage/5.0)*256) - 1);
 }
 
 ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
