@@ -27,11 +27,11 @@ void setup(){
   // using pin 11 since it is controlled by Timer2 (we;re using Timer1 for the interrupt)
   // first we'll change the frequency of the PWM to suit our needs...
   // ref: http://playground.arduino.cc/Main/TimerPWMCheatsheet
-  TCCR2B = TCCR2B & 0b11111000 | 0x02;  // 3921.16 Hz
+  TCCR2B = TCCR2B & 0b11111000 | 0x01;  // 31372.55 Hz
 
   // then we set it on!
   pinMode(11, OUTPUT);
-  float voltage = 4.8;  // voltage you wanna outputio
+  float voltage = 2.0;  // voltage you wanna outputio
   analogWrite(11, int((voltage/5.0)*256) - 1);
 }
 
