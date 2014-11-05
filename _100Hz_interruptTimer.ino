@@ -1,4 +1,8 @@
 // http://www.instructables.com/id/Arduino-Timer-Interrupts/
+// will be using a digital lowpass filter to extract DC and output to DAQ
+// declaring variables for dsp implementation
+float filtered_value, last_filtered_value;
+int value, last_value;
 
 void setup(){
   Serial.begin(115200);    // superfast serial communication
@@ -34,9 +38,19 @@ void setup(){
 }
 
 ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
-   // will simply read A0 and throw the value into serial
-   Serial.println(analogRead(A0));
+   // update variables...
+   last_filtered_value = filtered_value;
 
+   // will simply read A0 and then filter it
+   value = analogRead(A0);
+   
+   // filter out PPG frequencies and only have the DC part
+   // DSP LPF Cutoff = 
+   filtered_value = last_filtered_value + 0.004*(value - last_filtered_value);
+   
+   // then send the values over serial...
+   // but send an int because it's faster
+   Serial.println(int(filtered_value));
 }
 
 void loop(){
