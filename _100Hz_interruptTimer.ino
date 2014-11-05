@@ -51,6 +51,7 @@ ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
    // then send the values over serial...
    // but send an int because it's faster
    Serial.println(int(filtered_value));
+   // Serial.println(value);
 }
 
 void loop(){
