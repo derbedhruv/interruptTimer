@@ -50,8 +50,16 @@ ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
    
    // then send the values over serial...
    // but send an int because it's faster
-   Serial.println(int(filtered_value));
+   // Serial.println(int(filtered_value));
    // Serial.println(value);
+   
+   // the filtered value is now send out through PWM pin D3, which is also controlled by Timer2
+   // filtered_value is in the range (0,1023) and the analogWrite value needs to be in the range (0, 255).
+   // Hence we convert..
+   analogWrite(3, int(256*(filtered_value + 1)/1024) - 1);
+   
+   // Then we read the value in again from an isolated analog pin and print it out..
+   Serial.println(analogRead(A3));
 }
 
 void loop(){
