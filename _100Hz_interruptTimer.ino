@@ -1,11 +1,9 @@
 // http://www.instructables.com/id/Arduino-Timer-Interrupts/
-// will be doing DSP realtime to remove that ugly bloody 50Hz feature and also do some smoothing andshit.
-
-int currentValue, filteredValue, last_filteredValue, last_value;
 
 void setup(){
-  Serial.begin(115200);    // superfast  
+  Serial.begin(115200);    // superfast serial communication
   
+  // STEP 1: we create an interrupt timer at precisely 100Hz
   cli();//stop interrupts
 
   // set timer1 interrupt at 100Hz
@@ -23,15 +21,15 @@ void setup(){
 
   sei();//allow interrupts
 
-  // next this is something I'm going to try: how PWM LED control shows up on the photodiode...
+  // STEP 2 : Set PWM frequency for pin 11, which will control LED brightness via RC smoothing of the pwm signal
   // using pin 11 since it is controlled by Timer2 (we;re using Timer1 for the interrupt)
   // first we'll change the frequency of the PWM to suit our needs...
   // ref: http://playground.arduino.cc/Main/TimerPWMCheatsheet
   TCCR2B = TCCR2B & 0b11111000 | 0x01;  // 31372.55 Hz
 
-  // then we set it on!
+  // STEP 3 : Give the output pwm value in the range (0, 255) mapped to (0, 5)V
   pinMode(11, OUTPUT);
-  float voltage = 2.0;  // voltage you wanna outputio
+  float voltage = 2.4;  // voltage you wanna outputio
   analogWrite(11, int((voltage/5.0)*256) - 1);
 }
 
@@ -42,5 +40,5 @@ ISR(TIMER1_COMPA_vect){   //  timer1 interrupt 100Hz
 }
 
 void loop(){
-  // nothign much happens here
+  // nothign happens here
 }
