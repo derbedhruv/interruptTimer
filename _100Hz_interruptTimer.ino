@@ -7,6 +7,9 @@ int value, last_value;
 void setup(){
   Serial.begin(115200);    // superfast serial communication
   
+  double sampling_freq = 200;  // Fsampl in Hz
+  int match_register = 16000000/(1024*sampling_freq) - 1;
+  
   // STEP 1: we create an interrupt timer at precisely 100Hz
   cli();//stop interrupts
 
@@ -15,7 +18,7 @@ void setup(){
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0
   // set compare match register for 1hz increments
-  OCR1A = 155;// = (16*10^6) / (100*1024) - 1 (must be <65536)
+  OCR1A = match_register; // = (16*10^6) / (sampling_freq*1024) - 1 (must be <65536)
   // turn on CTC mode
   TCCR1B |= (1 << WGM12);
   // Set CS10 and CS12 bits for 1024 prescaler
